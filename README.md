@@ -2,6 +2,4 @@
 
 ### Features
 - Assign reading time tag
-- Assign 5 tags via LLM
-
-The application runs against 50 articles at a time
+- Assign 5 tags via LLM - processes 200 articles
