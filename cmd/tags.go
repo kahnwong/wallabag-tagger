@@ -21,6 +21,10 @@ var tagsCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		entries := core.WallabagGetEntries(20)
 		for _, entry := range entries.Embedded.Items {
+			if len(entry.Tags) > 1 || len(entry.Tags) == 0 {
+				fmt.Printf("Skipping article: %s\n", entry.Title)
+				continue
+			}
 			fmt.Printf("Processing article: %s\n", entry.Title)
 
 			// get tags from llm
