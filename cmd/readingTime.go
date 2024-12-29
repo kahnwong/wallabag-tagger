@@ -28,13 +28,7 @@ var readingTimeCmd = &cobra.Command{
 	Short: "Assign reading time tags",
 	Run: func(cmd *cobra.Command, args []string) {
 		// get entries
-		entries, err := wallabago.GetEntries(
-			wallabago.APICall,
-			0, 0, "", "", 1, 200, "", 0, -1, "", "")
-		if err != nil {
-			log.Println("Cannot obtain articles from Wallabag")
-		}
-
+		entries := core.WallabagGetEntries(200)
 		for _, entry := range entries.Embedded.Items {
 			fmt.Printf("Processing article: %s\n", entry.Title)
 
