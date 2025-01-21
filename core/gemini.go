@@ -3,7 +3,6 @@ package core
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/google/generative-ai-go/genai"
 	"github.com/microcosm-cc/bluemonday"
@@ -14,7 +13,7 @@ import (
 func GeminiGetTags(content string) string {
 	// init client
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(os.Getenv("GOOGLE_AI_API_KEY")))
+	client, err := genai.NewClient(ctx, option.WithAPIKey(config.GoogleAIApiKey))
 	if err != nil {
 		fmt.Println("Failed to create GOOGLE AI client")
 	}

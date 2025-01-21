@@ -10,11 +10,11 @@ import (
 
 func WallabagInit() {
 	wallabagConfig := wallabago.WallabagConfig{
-		WallabagURL:  os.Getenv("WALLABAG_URL"),
-		ClientID:     os.Getenv("WALLABAG_CLIENT_ID"),
-		ClientSecret: os.Getenv("WALLABAG_CLIENT_SECRET"),
-		UserName:     os.Getenv("WALLABAG_USERNAME"),
-		UserPassword: os.Getenv("WALLABAG_PASSWORD"),
+		WallabagURL:  config.WallabagUrl,
+		ClientID:     config.ClientID,
+		ClientSecret: config.ClientSecret,
+		UserName:     config.Username,
+		UserPassword: config.Password,
 	}
 	wallabago.SetConfig(wallabagConfig)
 }
