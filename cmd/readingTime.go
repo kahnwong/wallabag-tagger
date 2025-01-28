@@ -12,21 +12,22 @@ import (
 
 func timeBinning(readingTime int) string {
 	readingTimeTag := "readingTime-"
-	if readingTime <= 3 {
+	switch {
+	case readingTime <= 3:
 		readingTimeTag += "3"
-	} else if readingTime <= 5 {
+	case readingTime <= 5:
 		readingTimeTag += "5"
-	} else if readingTime <= 10 {
+	case readingTime <= 10:
 		readingTimeTag += "10"
-	} else if readingTime <= 15 {
+	case readingTime <= 15:
 		readingTimeTag += "15"
-	} else if readingTime <= 20 {
+	case readingTime <= 20:
 		readingTimeTag += "20"
-	} else if readingTime <= 25 {
+	case readingTime <= 25:
 		readingTimeTag += "25"
-	} else if readingTime <= 30 {
+	case readingTime <= 30:
 		readingTimeTag += "30"
-	} else {
+	default:
 		readingTimeTag = ""
 	}
 
