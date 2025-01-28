@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/generative-ai-go/genai"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/rs/zerolog/log"
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 )
@@ -15,7 +16,7 @@ func GeminiGetTags(content string) string {
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(config.GoogleAIApiKey))
 	if err != nil {
-		fmt.Println("Failed to create GOOGLE AI client")
+		log.Fatal().Msg("Failed to create GOOGLE AI client")
 	}
 	defer client.Close()
 
@@ -37,7 +38,7 @@ func GeminiGetTags(content string) string {
 			break
 		}
 		if err != nil {
-			fmt.Println("Failed to generate text")
+			log.Error().Msg("Failed to generate text")
 		}
 
 		if resp.Candidates != nil {

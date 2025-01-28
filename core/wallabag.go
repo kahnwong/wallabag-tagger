@@ -1,11 +1,9 @@
 package core
 
 import (
-	"log"
-	"os"
-
 	"github.com/Strubbl/wallabago/v9"
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/rs/zerolog/log"
 )
 
 func WallabagInit() {
@@ -24,8 +22,7 @@ func WallabagGetEntries(perPage int) wallabago.Entries {
 		wallabago.APICall,
 		0, 0, "", "", 1, perPage, "", 0, -1, "", "")
 	if err != nil {
-		log.Println("Cannot obtain articles from Wallabag")
-		os.Exit(1)
+		log.Fatal().Msg("Cannot obtain articles from Wallabag")
 	}
 
 	return entries

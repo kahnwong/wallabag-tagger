@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
+
+	"github.com/rs/zerolog/log"
 
 	"github.com/Strubbl/wallabago/v9"
 	"github.com/kahnwong/wallabag-tagger/core"
@@ -22,10 +22,10 @@ var tagsCmd = &cobra.Command{
 		entries := core.WallabagGetEntries(20)
 		for _, entry := range entries.Embedded.Items {
 			if len(entry.Tags) > 1 || len(entry.Tags) == 0 {
-				fmt.Printf("Skipping article: %s\n", entry.Title)
+				log.Info().Msgf("Skipping article: %s", entry.Title)
 				continue
 			}
-			fmt.Printf("Processing article: %s\n", entry.Title)
+			log.Info().Msgf("Processing article: %s", entry.Title)
 
 			// get tags from llm
 			tagsStr := core.GeminiGetTags(entry.Content)
@@ -34,7 +34,7 @@ var tagsCmd = &cobra.Command{
 			var tags Tags
 			err := json.Unmarshal([]byte(tagsStr), &tags)
 			if err != nil {
-				fmt.Printf("Cannot unmarshal tags: %s\n", tagsStr)
+				log.Error().Msgf("Cannot unmarshal tags: %s", tagsStr)
 			}
 
 			// add tags prefix so it doesn't conflict with manually-assigned tags
@@ -46,7 +46,7 @@ var tagsCmd = &cobra.Command{
 			// update entry tags
 			err = wallabago.AddEntryTags(entry.ID, tagsWithPrefix...)
 			if err != nil {
-				log.Printf("Cannot assign tags to article: %s", entry.Title)
+				log.Error().Msgf("Cannot assign tags to article: %s", entry.Title)
 			}
 		}
 	},

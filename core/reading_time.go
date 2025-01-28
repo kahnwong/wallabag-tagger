@@ -1,11 +1,10 @@
 package core
 
 import (
-	"fmt"
-	"log"
 	"sync"
 
 	"github.com/Strubbl/wallabago/v9"
+	"github.com/rs/zerolog/log"
 )
 
 func timeBinning(readingTime int) string {
@@ -34,20 +33,20 @@ func timeBinning(readingTime int) string {
 
 func ReadingTime() {
 	// get entries
-	entries := WallabagGetEntries(400)
+	entries := WallabagGetEntries(5)
 
 	// goroutines
 	var wg sync.WaitGroup
 	wg.Add(len(entries.Embedded.Items))
 	for _, entry := range entries.Embedded.Items {
 		go func() {
-			fmt.Printf("Processing article: %s\n", entry.Title)
+			log.Info().Msgf("Processing article: %s", entry.Title)
 
 			// assign reading time tag
 			readingTimeTag := timeBinning(entry.ReadingTime)
 			err := wallabago.AddEntryTags(entry.ID, readingTimeTag)
 			if err != nil {
-				log.Printf("Cannot assign tags to article: %s", entry.Title)
+				log.Err(err).Msgf("Cannot assign tags to article: %s", entry.Title)
 			}
 
 			wg.Done()
