@@ -18,6 +18,14 @@ func timeBinning(readingTime int) string {
 		readingTimeTag += "5"
 	} else if readingTime <= 10 {
 		readingTimeTag += "10"
+	} else if readingTime <= 15 {
+		readingTimeTag += "15"
+	} else if readingTime <= 20 {
+		readingTimeTag += "20"
+	} else if readingTime <= 25 {
+		readingTimeTag += "25"
+	} else if readingTime <= 30 {
+		readingTimeTag += "30"
 	} else {
 		readingTimeTag = ""
 	}
