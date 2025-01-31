@@ -33,7 +33,7 @@ func timeBinning(readingTime int) string {
 
 func ReadingTime() {
 	// get entries
-	entries := WallabagGetEntries(5)
+	entries := WallabagGetEntries(300)
 
 	// goroutines
 	var wg sync.WaitGroup
