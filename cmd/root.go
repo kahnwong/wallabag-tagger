@@ -6,9 +6,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	version = "dev"
+)
+
 var rootCmd = &cobra.Command{
-	Use:   "wallabag-tagger",
-	Short: "Wallabag utils to assign reading time and topics tags",
+	Use:     "wallabag-tagger",
+	Version: version,
+	Short:   "Wallabag utils to assign reading time and topics tags",
 	// Run: func(cmd *cobra.Command, args []string) { },
 }
 

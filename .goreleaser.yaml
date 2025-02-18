@@ -1,0 +1,14 @@
+version: 2
+builds:
+  - goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -w -s
+      - -X github.com/kahnwong/wallabag-tagger/cmd.version={{.Version}}
+checksum:
+  disable: true
