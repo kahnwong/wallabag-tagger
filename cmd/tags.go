@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"strings"
 
 	"github.com/rs/zerolog/log"
 
@@ -21,9 +22,19 @@ var tagsCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		entries := core.WallabagGetEntries()
 		for _, entry := range entries.Embedded.Items {
-			if len(entry.Tags) > 1 || len(entry.Tags) == 0 {
-				log.Info().Msgf("Skipping article: %s", entry.Title)
-				continue
+			// skip if already tagged via LLM
+			isSkip := false
+			if len(entry.Tags) >= 1 { // if already has tags
+				for _, tag := range entry.Tags {
+					if strings.HasPrefix(tag.Label, "llm") {
+						isSkip = true
+						continue
+					}
+				}
+				if isSkip {
+					log.Info().Msgf("Skipping article: %s", entry.Title)
+					continue
+				}
 			}
 			log.Info().Msgf("Processing article: %s", entry.Title)
 
