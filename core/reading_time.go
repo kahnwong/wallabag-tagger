@@ -11,9 +11,9 @@ func timeBinning(readingTime int) string {
 	readingTimeTag := "readingTime-"
 	switch {
 	case readingTime <= 3:
-		readingTimeTag += "3"
+		readingTimeTag += "03"
 	case readingTime <= 5:
-		readingTimeTag += "5"
+		readingTimeTag += "05"
 	case readingTime <= 10:
 		readingTimeTag += "10"
 	case readingTime <= 15:
