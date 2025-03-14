@@ -39,25 +39,27 @@ var tagsCmd = &cobra.Command{
 			log.Info().Msgf("Processing article: %s", entry.Title)
 
 			// get tags from llm
-			tagsStr := core.GeminiGetTags(entry.Content)
+			tagsStr, err := core.GeminiGetTags(entry.Content)
 
-			// convert json-string to Tags struct
-			var tags Tags
-			err := json.Unmarshal([]byte(tagsStr), &tags)
-			if err != nil {
-				log.Error().Msgf("Cannot unmarshal tags: %s", tagsStr)
-			}
+			if err != nil { // if successfully generated tags
+				// convert json-string to Tags struct
+				var tags Tags
+				err := json.Unmarshal([]byte(tagsStr), &tags)
+				if err != nil {
+					log.Error().Msgf("Cannot unmarshal tags: %s", tagsStr)
+				}
 
-			// add tags prefix so it doesn't conflict with manually-assigned tags
-			var tagsWithPrefix []string
-			for _, tag := range tags.Tag {
-				tagsWithPrefix = append(tagsWithPrefix, "llm-"+tag)
-			}
+				// add tags prefix so it doesn't conflict with manually-assigned tags
+				var tagsWithPrefix []string
+				for _, tag := range tags.Tag {
+					tagsWithPrefix = append(tagsWithPrefix, "llm-"+tag)
+				}
 
-			// update entry tags
-			err = wallabago.AddEntryTags(entry.ID, tagsWithPrefix...)
-			if err != nil {
-				log.Error().Msgf("Cannot assign tags to article: %s", entry.Title)
+				// update entry tags
+				err = wallabago.AddEntryTags(entry.ID, tagsWithPrefix...)
+				if err != nil {
+					log.Error().Msgf("Cannot assign tags to article: %s", entry.Title)
+				}
 			}
 		}
 	},

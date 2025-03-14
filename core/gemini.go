@@ -11,7 +11,9 @@ import (
 	"google.golang.org/api/option"
 )
 
-func GeminiGetTags(content string) string {
+func GeminiGetTags(content string) (string, error) {
+	var err error
+
 	// init client
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(config.GoogleAIApiKey))
@@ -38,7 +40,7 @@ func GeminiGetTags(content string) string {
 			break
 		}
 		if err != nil {
-			log.Error().Msg("Failed to generate text")
+			log.Warn().Msg("Failed to generate text")
 		}
 
 		if resp.Candidates != nil {
@@ -50,5 +52,5 @@ func GeminiGetTags(content string) string {
 		}
 	}
 
-	return output
+	return output, err
 }
