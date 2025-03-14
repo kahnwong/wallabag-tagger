@@ -17,10 +17,12 @@ func WallabagInit() {
 	wallabago.SetConfig(wallabagConfig)
 }
 
-func WallabagGetEntries(perPage int) wallabago.Entries {
+var wallabagFetchLimit = 300
+
+func WallabagGetEntries() wallabago.Entries {
 	entries, err := wallabago.GetEntries(
 		wallabago.APICall,
-		0, 0, "", "", 1, perPage, "", 0, -1, "", "")
+		0, 0, "", "", 1, wallabagFetchLimit, "", 0, -1, "", "")
 	if err != nil {
 		log.Fatal().Msg("Cannot obtain articles from Wallabag")
 	}

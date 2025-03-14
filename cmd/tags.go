@@ -19,7 +19,7 @@ var tagsCmd = &cobra.Command{
 	Use:   "tags",
 	Short: "Apply tags via LLM",
 	Run: func(cmd *cobra.Command, args []string) {
-		entries := core.WallabagGetEntries(400)
+		entries := core.WallabagGetEntries()
 		for _, entry := range entries.Embedded.Items {
 			if len(entry.Tags) > 1 || len(entry.Tags) == 0 {
 				log.Info().Msgf("Skipping article: %s", entry.Title)
