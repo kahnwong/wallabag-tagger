@@ -3,7 +3,6 @@ package core
 import (
 	"sync"
 
-	"github.com/Strubbl/wallabago/v9"
 	"github.com/rs/zerolog/log"
 )
 
@@ -44,10 +43,7 @@ func ReadingTime() {
 
 			// assign reading time tag
 			readingTimeTag := timeBinning(entry.ReadingTime)
-			err := wallabago.AddEntryTags(entry.ID, readingTimeTag)
-			if err != nil {
-				log.Err(err).Msgf("Cannot assign tags to article: %s", entry.Title)
-			}
+			WallabagWriteTags(entry, []string{readingTimeTag})
 
 			wg.Done()
 		}()

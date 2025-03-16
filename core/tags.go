@@ -55,10 +55,7 @@ func LLMTags() {
 			}
 
 			// update entry tags
-			err = wallabago.AddEntryTags(entry.ID, tagsWithPrefix...)
-			if err != nil {
-				log.Error().Msgf("Cannot assign tags to article: %s", entry.Title)
-			}
+			WallabagWriteTags(entry, tagsWithPrefix)
 		}
 	}
 }

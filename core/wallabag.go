@@ -29,3 +29,10 @@ func WallabagGetEntries() wallabago.Entries {
 
 	return entries
 }
+
+func WallabagWriteTags(entry wallabago.Item, tags []string) {
+	err := wallabago.AddEntryTags(entry.ID, tags...)
+	if err != nil {
+		log.Err(err).Msgf("Cannot assign tags to article: %s", entry.Title)
+	}
+}
