@@ -12,22 +12,28 @@ type Tags struct {
 	Tag []string `json:"tags"`
 }
 
+func isSkipEntry(entry wallabago.Item) bool {
+	isSkip := false
+	if len(entry.Tags) >= 1 { // if already has tags
+		for _, tag := range entry.Tags {
+			if strings.HasPrefix(tag.Label, "llm") {
+				isSkip = true
+				continue
+			}
+		}
+	}
+
+	return isSkip
+}
+
 func LLMTags() {
 	entries := WallabagGetEntries()
 	for _, entry := range entries.Embedded.Items {
 		// skip if already tagged via LLM
-		isSkip := false
-		if len(entry.Tags) >= 1 { // if already has tags
-			for _, tag := range entry.Tags {
-				if strings.HasPrefix(tag.Label, "llm") {
-					isSkip = true
-					continue
-				}
-			}
-			if isSkip {
-				log.Info().Msgf("Skipping article: %s", entry.Title)
-				continue
-			}
+		isSkip := isSkipEntry(entry)
+		if isSkip {
+			log.Info().Msgf("Skipping article: %s", entry.Title)
+			continue
 		}
 		log.Info().Msgf("Processing article: %s", entry.Title)
 
