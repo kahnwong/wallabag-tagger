@@ -34,7 +34,7 @@ func LLMTags() {
 		// get tags from llm
 		tagsStr, err := GeminiGetTags(entry.Content)
 
-		if err != nil { // if successfully generated tags
+		if err == nil { // if successfully generated tags
 			// convert json-string to Tags struct
 			var tags Tags
 			err := json.Unmarshal([]byte(tagsStr), &tags)
