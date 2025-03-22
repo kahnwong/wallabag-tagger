@@ -8,7 +8,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/kahnwong/cli-base v0.0.0-20250121091831-4eeecf72423f
 	github.com/microcosm-cc/bluemonday v1.0.27
-	github.com/rs/zerolog v1.33.0
+	github.com/rs/zerolog v1.34.0
 	github.com/spf13/cobra v1.9.1
 	google.golang.org/api v0.226.0
 )
