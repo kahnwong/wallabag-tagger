@@ -6,7 +6,7 @@ require (
 	github.com/Strubbl/wallabago/v9 v9.0.15
 	github.com/google/generative-ai-go v0.20.1
 	github.com/joho/godotenv v1.5.1
-	github.com/kahnwong/cli-base v0.0.0-20250506033212-029722a13b47
+	github.com/kahnwong/cli-base v0.0.0-20250814120046-dde1e03ae9dd
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/rs/zerolog v1.34.0
 	github.com/spf13/cobra v1.9.1
