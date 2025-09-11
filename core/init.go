@@ -1,7 +1,7 @@
 package core
 
 import (
-	cliBase "github.com/kahnwong/cli-base"
+	cliBase "github.com/kahnwong/cli-base-sops"
 )
 
 var config = cliBase.ReadYamlSops[Config]("~/.config/wallabag-tagger/config.sops.yaml")
