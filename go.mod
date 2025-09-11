@@ -1,6 +1,6 @@
 module github.com/kahnwong/wallabag-tagger
 
-go 1.25.0
+go 1.25.1
 
 require (
 	github.com/Strubbl/wallabago/v9 v9.0.15
