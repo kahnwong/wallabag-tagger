@@ -3,7 +3,7 @@ module github.com/kahnwong/wallabag-tagger
 go 1.25.1
 
 require (
-	github.com/Strubbl/wallabago/v9 v9.0.15
+	github.com/Strubbl/wallabago/v9 v9.0.16
 	github.com/google/generative-ai-go v0.20.1
 	github.com/joho/godotenv v1.5.1
 	github.com/kahnwong/cli-base-sops v0.0.0-20250911030916-09b2c1bcd75d
