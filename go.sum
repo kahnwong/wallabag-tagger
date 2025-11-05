@@ -79,6 +79,8 @@ github.com/Strubbl/wallabago/v9 v9.0.15 h1:1RkPsYALWknisrEVjSWosal0gD/uravycZWxr
 github.com/Strubbl/wallabago/v9 v9.0.15/go.mod h1:FxsW8j6D0M7YfUsGoe8fc9qZey39zO7bGa2Bk1h0Oos=
 github.com/Strubbl/wallabago/v9 v9.0.16 h1:RdVpsOWVvGB/FkCPO4yxNkZWRvJ/w7VhhPteWLtrgyU=
 github.com/Strubbl/wallabago/v9 v9.0.16/go.mod h1:zom7wVUA1LnwYSPJtGJEu9HrYFfh2bha/EB3CJyxhOE=
+github.com/Strubbl/wallabago/v9 v9.0.17 h1:eB5JUurY9JwicoiDS4cl4iyUCqS8gysGaIlA3diS87I=
+github.com/Strubbl/wallabago/v9 v9.0.17/go.mod h1:/OURRO4hEXz+XgQJfJeSz569KUKijRfdZdXVZEdUCO4=
 github.com/aws/aws-sdk-go-v2 v1.36.3 h1:mJoei2CxPutQVxaATCzDUjcZEjVRdpsiiXi2o38yqWM=
 github.com/aws/aws-sdk-go-v2 v1.36.3/go.mod h1:LLXuLpgzEbD766Z5ECcRmi8AzSwfZItDtmABVkRLGzg=
 github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.10 h1:zAybnyUQXIZ5mok5Jqwlf58/TFE7uvd3IAsa1aF9cXs=
