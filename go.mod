@@ -9,7 +9,7 @@ require (
 	github.com/kahnwong/cli-base-sops v0.0.0-20250928214951-d72c29a59f02
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/rs/zerolog v1.34.0
-	github.com/spf13/cobra v1.10.1
+	github.com/spf13/cobra v1.10.2
 	google.golang.org/api v0.258.0
 )
 
