@@ -3,7 +3,7 @@ module github.com/kahnwong/wallabag-tagger
 go 1.25.1
 
 require (
-	github.com/Strubbl/wallabago/v9 v9.0.20
+	github.com/Strubbl/wallabago/v9 v9.0.21
 	github.com/google/generative-ai-go v0.20.1
 	github.com/joho/godotenv v1.5.1
 	github.com/kahnwong/cli-base-sops v0.0.0-20250928214951-d72c29a59f02
@@ -127,7 +127,7 @@ require (
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.39.0 // indirect
 	golang.org/x/term v0.38.0 // indirect
-	golang.org/x/text v0.33.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
 	golang.org/x/time v0.14.0 // indirect
 	google.golang.org/genproto v0.0.0-20251202230838-ff82c1b0f217 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20251202230838-ff82c1b0f217 // indirect
