@@ -2,9 +2,16 @@ package core
 
 import (
 	cliBase "github.com/kahnwong/cli-base-sops"
+	"github.com/rs/zerolog/log"
 )
 
-var config = cliBase.ReadYamlSops[Config]("~/.config/wallabag-tagger/config.sops.yaml")
+var config = func() *Config {
+	cfg, err := cliBase.ReadYamlSops[Config]("~/.config/wallabag-tagger/config.sops.yaml")
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to read config")
+	}
+	return cfg
+}()
 
 type Config struct {
 	WallabagUrl    string `yaml:"WALLABAG_URL"`

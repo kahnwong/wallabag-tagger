@@ -4,14 +4,11 @@ import (
 	"bytes"
 	"context"
 	"embed"
-	"fmt"
 	"text/template"
 
-	"github.com/google/generative-ai-go/genai"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/rs/zerolog/log"
-	"google.golang.org/api/iterator"
-	"google.golang.org/api/option"
+	"google.golang.org/genai"
 )
 
 //go:embed resources/*
@@ -39,14 +36,13 @@ func GeminiGetTags(content string) (string, error) {
 
 	// init client
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(config.GoogleAIApiKey))
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		APIKey:  config.GoogleAIApiKey,
+		Backend: genai.BackendGeminiAPI,
+	})
 	if err != nil {
 		log.Fatal().Msg("Failed to create GOOGLE AI client")
 	}
-	defer client.Close()
-
-	model := client.GenerativeModel("gemini-1.5-flash")
-	model.ResponseMIMEType = "application/json"
 
 	// submit
 	p := bluemonday.StripTagsPolicy()
@@ -56,25 +52,22 @@ func GeminiGetTags(content string) (string, error) {
 	prompt := renderPrompt("resources/prompt.txt", map[string]interface{}{
 		"Content": contentSanitized,
 	})
-	iter := model.GenerateContentStream(ctx, genai.Text(prompt))
+
+	config := &genai.GenerateContentConfig{
+		ResponseMIMEType: "application/json",
+	}
+
+	iter := client.Models.GenerateContentStream(ctx, "gemini-2.5-flash",
+		[]*genai.Content{{Parts: []*genai.Part{{Text: prompt}}}},
+		config)
 
 	var output string
-	for {
-		resp, err := iter.Next()
-		if err == iterator.Done {
-			break
-		}
+	for resp, err := range iter {
 		if err != nil {
 			log.Warn().Msg("Failed to generate text")
+			continue
 		}
-
-		if resp.Candidates != nil {
-			for _, v := range resp.Candidates {
-				for _, k := range v.Content.Parts {
-					output += fmt.Sprint(k.(genai.Text))
-				}
-			}
-		}
+		output += resp.Text()
 	}
 
 	return output, err
