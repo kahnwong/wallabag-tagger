@@ -15,6 +15,5 @@ var readingTimeCmd = &cobra.Command{
 }
 
 func init() {
-	core.WallabagInit()
 	rootCmd.AddCommand(readingTimeCmd)
 }

@@ -15,6 +15,5 @@ var tagsCmd = &cobra.Command{
 }
 
 func init() {
-	core.WallabagInit()
 	rootCmd.AddCommand(tagsCmd)
 }

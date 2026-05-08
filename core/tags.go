@@ -27,7 +27,7 @@ func isSkipEntry(entry wallabago.Item) bool {
 }
 
 func LLMTags() {
-	entries := WallabagGetEntries()
+	entries := wallabag.GetEntries()
 	for _, entry := range entries.Embedded.Items {
 		// skip if already tagged via LLM
 		isSkip := isSkipEntry(entry)
@@ -55,7 +55,7 @@ func LLMTags() {
 			}
 
 			// update entry tags
-			WallabagWriteTags(entry, tagsWithPrefix)
+			wallabag.WriteTags(entry, tagsWithPrefix)
 		}
 	}
 }
