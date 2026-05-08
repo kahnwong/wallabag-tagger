@@ -9,7 +9,9 @@ import (
 	"text/template"
 
 	"github.com/microcosm-cc/bluemonday"
-	"google.golang.org/genai"
+	"github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
+	"github.com/openai/openai-go/v3/responses"
 )
 
 //go:embed resources/*
@@ -34,19 +36,13 @@ func renderPrompt(templatePath string, data any) string {
 	return tpl.String()
 }
 
-func GeminiGetTags(content string) (string, error) {
-	var err error
-
+func FetchLlmResponse(content string) (string, error) {
 	// init client
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, &genai.ClientConfig{
-		APIKey:  config.GoogleAIApiKey,
-		Backend: genai.BackendGeminiAPI,
-	})
-	if err != nil {
-		slog.Error("Failed to create GOOGLE AI client", "error", err)
-		os.Exit(1)
-	}
+	client := openai.NewClient(
+		option.WithBaseURL(config.OpenAiBaseUrl),
+		option.WithAPIKey(config.OpenaiApiKey),
+	)
 
 	// submit
 	p := bluemonday.StripTagsPolicy()
@@ -57,22 +53,14 @@ func GeminiGetTags(content string) (string, error) {
 		"Content": contentSanitized,
 	})
 
-	config := &genai.GenerateContentConfig{
-		ResponseMIMEType: "application/json",
+	resp, err := client.Responses.New(ctx, responses.ResponseNewParams{
+		Input: responses.ResponseNewParamsInputUnion{OfString: openai.String(prompt)},
+		Model: config.ModelName,
+	})
+
+	if err != nil {
+		return "", err
 	}
 
-	iter := client.Models.GenerateContentStream(ctx, "gemini-2.5-flash",
-		[]*genai.Content{{Parts: []*genai.Part{{Text: prompt}}}},
-		config)
-
-	var output string
-	for resp, err := range iter {
-		if err != nil {
-			slog.Warn("Failed to generate text", "error", err)
-			continue
-		}
-		output += resp.Text()
-	}
-
-	return output, err
+	return resp.OutputText(), nil
 }

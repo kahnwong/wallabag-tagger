@@ -17,10 +17,12 @@ var config = func() *Config {
 }()
 
 type Config struct {
-	WallabagUrl    string `yaml:"WALLABAG_URL"`
-	ClientID       string `yaml:"CLIENT_ID"`
-	ClientSecret   string `yaml:"CLIENT_SECRET"`
-	Username       string `yaml:"USERNAME"`
-	Password       string `yaml:"PASSWORD"`
-	GoogleAIApiKey string `yaml:"GOOGLE_AI_API_KEY"`
+	WallabagUrl   string `yaml:"WALLABAG_URL"`
+	ClientID      string `yaml:"CLIENT_ID"`
+	ClientSecret  string `yaml:"CLIENT_SECRET"`
+	Username      string `yaml:"USERNAME"`
+	Password      string `yaml:"PASSWORD"`
+	OpenAiBaseUrl string `yaml:"OPENAI_BASE_URL"`
+	OpenaiApiKey  string `yaml:"OPENAI_API_KEY"`
+	ModelName     string `yaml:"MODEL_NAME"`
 }
