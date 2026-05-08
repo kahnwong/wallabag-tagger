@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"context"
 	"embed"
+	"log/slog"
+	"os"
 	"text/template"
 
 	"github.com/microcosm-cc/bluemonday"
-	"github.com/rs/zerolog/log"
 	"google.golang.org/genai"
 )
 
@@ -18,14 +19,16 @@ func renderPrompt(templatePath string, data any) string {
 	// init template
 	tmpl, err := template.ParseFS(templatesFS, templatePath)
 	if err != nil {
-		log.Fatal().Msgf("Error parsing template: %s", templatePath)
+		slog.Error("Error parsing template", "path", templatePath)
+		os.Exit(1)
 	}
 
 	// render template
 	var tpl bytes.Buffer
 	err = tmpl.Execute(&tpl, data)
 	if err != nil {
-		log.Fatal().Msgf("Error rendering now playing: %s", templatePath)
+		slog.Error("Error rendering template", "path", templatePath)
+		os.Exit(1)
 	}
 
 	return tpl.String()
@@ -41,7 +44,8 @@ func GeminiGetTags(content string) (string, error) {
 		Backend: genai.BackendGeminiAPI,
 	})
 	if err != nil {
-		log.Fatal().Msg("Failed to create GOOGLE AI client")
+		slog.Error("Failed to create GOOGLE AI client", "error", err)
+		os.Exit(1)
 	}
 
 	// submit
@@ -64,7 +68,7 @@ func GeminiGetTags(content string) (string, error) {
 	var output string
 	for resp, err := range iter {
 		if err != nil {
-			log.Warn().Msg("Failed to generate text")
+			slog.Warn("Failed to generate text", "error", err)
 			continue
 		}
 		output += resp.Text()

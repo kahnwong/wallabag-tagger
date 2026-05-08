@@ -1,9 +1,8 @@
 package core
 
 import (
+	"log/slog"
 	"sync"
-
-	"github.com/rs/zerolog/log"
 )
 
 func timeBinning(readingTime int) string {
@@ -39,7 +38,7 @@ func ReadingTime() {
 	wg.Add(len(entries.Embedded.Items))
 	for _, entry := range entries.Embedded.Items {
 		go func() {
-			log.Info().Msgf("Processing article: %s", entry.Title)
+			slog.Info("Processing article", "title", entry.Title)
 
 			// assign reading time tag
 			readingTimeTag := timeBinning(entry.ReadingTime)

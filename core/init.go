@@ -1,14 +1,17 @@
 package core
 
 import (
+	"log/slog"
+	"os"
+
 	cliBase "github.com/kahnwong/cli-base-sops"
-	"github.com/rs/zerolog/log"
 )
 
 var config = func() *Config {
 	cfg, err := cliBase.ReadYamlSops[Config]("~/.config/wallabag-tagger/config.sops.yaml")
 	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to read config")
+		slog.Error("Failed to read config", "error", err)
+		os.Exit(1)
 	}
 	return cfg
 }()

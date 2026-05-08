@@ -1,9 +1,11 @@
 package core
 
 import (
+	"log/slog"
+	"os"
+
 	"github.com/Strubbl/wallabago/v9"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/rs/zerolog/log"
 )
 
 func WallabagInit() {
@@ -24,7 +26,8 @@ func WallabagGetEntries() wallabago.Entries {
 		wallabago.APICall,
 		0, 0, "", "", 1, wallabagFetchLimit, "", 0, -1, "", "")
 	if err != nil {
-		log.Fatal().Msg("Cannot obtain articles from Wallabag")
+		slog.Error("Cannot obtain articles from Wallabag")
+		os.Exit(1)
 	}
 
 	return entries
@@ -33,6 +36,6 @@ func WallabagGetEntries() wallabago.Entries {
 func WallabagWriteTags(entry wallabago.Item, tags []string) {
 	err := wallabago.AddEntryTags(entry.ID, tags...)
 	if err != nil {
-		log.Err(err).Msgf("Cannot assign tags to article: %s", entry.Title)
+		slog.Error("Cannot assign tags to article", "title", entry.Title, "error", err)
 	}
 }

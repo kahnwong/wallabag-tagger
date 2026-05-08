@@ -1,8 +1,11 @@
 package cmd
 
 import (
+	"log/slog"
 	"os"
 
+	"github.com/rs/zerolog"
+	slogzerolog "github.com/samber/slog-zerolog"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +17,6 @@ var rootCmd = &cobra.Command{
 	Use:     "wallabag-tagger",
 	Version: version,
 	Short:   "Wallabag utils to assign reading time and topics tags",
-	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
 func Execute() {
@@ -25,5 +27,9 @@ func Execute() {
 }
 
 func init() {
+	output := zerolog.ConsoleWriter{Out: os.Stderr}
+	logger := zerolog.New(output).With().Timestamp().Logger()
+	slog.SetDefault(slog.New(slogzerolog.Option{Logger: &logger}.NewZerologHandler()))
+
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

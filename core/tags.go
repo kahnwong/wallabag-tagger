@@ -2,10 +2,10 @@ package core
 
 import (
 	"encoding/json"
+	"log/slog"
 	"strings"
 
 	"github.com/Strubbl/wallabago/v9"
-	"github.com/rs/zerolog/log"
 )
 
 type Tags struct {
@@ -32,10 +32,10 @@ func LLMTags() {
 		// skip if already tagged via LLM
 		isSkip := isSkipEntry(entry)
 		if isSkip {
-			log.Info().Msgf("Skipping article: %s", entry.Title)
+			slog.Info("Skipping article", "title", entry.Title)
 			continue
 		}
-		log.Info().Msgf("Processing article: %s", entry.Title)
+		slog.Info("Processing article", "title", entry.Title)
 
 		// get tags from llm
 		tagsStr, err := GeminiGetTags(entry.Content)
@@ -45,7 +45,7 @@ func LLMTags() {
 			var tags Tags
 			err := json.Unmarshal([]byte(tagsStr), &tags)
 			if err != nil {
-				log.Error().Msgf("Cannot unmarshal tags: %s", tagsStr)
+				slog.Error("Cannot unmarshal tags", "tags", tagsStr)
 			}
 
 			// add tags prefix so it doesn't conflict with manually-assigned tags
