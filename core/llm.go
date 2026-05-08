@@ -8,7 +8,6 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/microcosm-cc/bluemonday"
 	"github.com/openai/openai-go/v3"
 	"github.com/openai/openai-go/v3/option"
 	"github.com/openai/openai-go/v3/responses"
@@ -36,7 +35,7 @@ func renderPrompt(templatePath string, data any) string {
 	return tpl.String()
 }
 
-func FetchLlmResponse(content string) (string, error) {
+func FetchLlmResponse(prompt string) (string, error) {
 	// init client
 	ctx := context.Background()
 	client := openai.NewClient(
@@ -45,14 +44,6 @@ func FetchLlmResponse(content string) (string, error) {
 	)
 
 	// submit
-	p := bluemonday.StripTagsPolicy()
-	contentSanitized := p.Sanitize(
-		content,
-	)
-	prompt := renderPrompt("resources/prompt.txt", map[string]interface{}{
-		"Content": contentSanitized,
-	})
-
 	resp, err := client.Responses.New(ctx, responses.ResponseNewParams{
 		Input: responses.ResponseNewParamsInputUnion{OfString: openai.String(prompt)},
 		Model: config.ModelName,
