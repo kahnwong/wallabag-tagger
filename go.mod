@@ -3,7 +3,7 @@ module github.com/kahnwong/wallabag-tagger
 go 1.26.3
 
 require (
-	github.com/Strubbl/wallabago/v9 v9.0.23
+	github.com/Strubbl/wallabago/v9 v9.0.24
 	github.com/joho/godotenv v1.5.1
 	github.com/kahnwong/cli-base-sops v0.0.0-20260130184704-f74848815081
 	github.com/microcosm-cc/bluemonday v1.0.27
