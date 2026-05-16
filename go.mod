@@ -7,7 +7,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/kahnwong/cli-base-sops v0.0.0-20260510152952-2b3c177f4b1f
 	github.com/microcosm-cc/bluemonday v1.0.27
-	github.com/openai/openai-go/v3 v3.35.0
+	github.com/openai/openai-go/v3 v3.36.0
 	github.com/rs/zerolog v1.35.1
 	github.com/samber/slog-zerolog/v2 v2.9.2
 	github.com/spf13/cobra v1.10.2
